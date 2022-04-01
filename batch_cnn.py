@@ -10,10 +10,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 torch.manual_seed(1)
 
-EPOCH = 50
-BATCH_SIZE = 50
+EPOCH = 500
+BATCH_SIZE = 491
 LR = 0.001
-log_interval = 100
+log_interval = 16
 
 train_losses = []
 train_counter = []
@@ -146,7 +146,7 @@ cnn = CNN()
 cnn = cnn.cuda()
 print(cnn)
 #
-optimizer = torch.optim.Adadelta(cnn.parameters())
+optimizer = torch.optim.Adam(cnn.parameters(),LR=LR)
 loss_func = nn.BCEWithLogitsLoss()
 
 for epoch in range(EPOCH):
@@ -171,4 +171,4 @@ for epoch in range(EPOCH):
                                                                            len(train_loader.dataset),
                                                                            100. * step / len(train_loader),
                                                                            loss.item(),num*100/test_output.shape[0]))
-torch.save(cnn,'cnn.pt')
+torch.save(cnn,'datch_cnn.pt')
